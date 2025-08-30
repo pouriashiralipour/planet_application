@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planet_application/models/on_boarding_models.dart';
+import 'package:planet_application/screens/root_screen.dart';
 
 import '../utils/size_config.dart';
 
@@ -45,7 +46,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         elevation: 0,
         title: TextButton(
           onPressed: () {
-            print('آخرین صفحه! وقتشه بریم صفحه اصلی.');
+            Navigator.of(
+              context,
+            ).pushReplacement(MaterialPageRoute(builder: (context) => RootScreen()));
           },
           child: Text(
             'رد کردن',
@@ -122,7 +125,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: GestureDetector(
                 onTap: () {
                   if (currentIndex == OnBoardingModels.onBoardingList.length - 1) {
-                    print('آخرین صفحه! وقتشه بریم صفحه اصلی.');
+                    Navigator.of(
+                      context,
+                    ).pushReplacement(MaterialPageRoute(builder: (context) => RootScreen()));
                   } else {
                     pageController.nextPage(
                       duration: const Duration(milliseconds: 400),
