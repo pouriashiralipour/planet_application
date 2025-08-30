@@ -18,7 +18,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   List<String> appBarTitle = ['خانه', 'علاقه مندی ها', 'سبد خرید', 'پروفایل'];
   int bottonIndex = 0;
-  List<IconData> iconsList = [Icons.home, Icons.favorite, Icons.shopping_cart, Icons.people];
+  List<IconData> iconsList = [Icons.home, Icons.favorite, Icons.shopping_cart, Icons.person];
   List<Widget> screens = [HomeScreen(), FavoriteScreen(), CartScreen(), ProfileScreen()];
 
   @override
@@ -85,6 +85,7 @@ class _RootScreenState extends State<RootScreen> {
         activeIndex: bottonIndex,
         onTap: (index) => setState(() => bottonIndex = index),
       ),
+      body: IndexedStack(index: bottonIndex, children: screens),
     );
   }
 }
