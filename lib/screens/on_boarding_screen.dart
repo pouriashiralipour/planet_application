@@ -57,91 +57,94 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          PageView.builder(
-            itemCount: OnBoardingModels.onBoardingList.length,
-            controller: pageController,
-            scrollDirection: Axis.horizontal,
-            onPageChanged: (int page) {
-              setState(() {
-                currentIndex = page;
-              });
-            },
-            itemBuilder: (context, index) {
-              final item = OnBoardingModels.onBoardingList[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionateScreenHeight(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      item['image'],
-                      height: SizeConfig.getProportionateScreenHeight(350),
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
-                    Text(
-                      item['title'],
-                      style: TextStyle(
-                        color: Color(0xFF296E48),
-                        fontSize: SizeConfig.getProportionateScreenWidth(24),
-                        fontWeight: FontWeight.w500,
+      body: Padding(
+        padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.05),
+        child: Stack(
+          children: [
+            PageView.builder(
+              itemCount: OnBoardingModels.onBoardingList.length,
+              controller: pageController,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (int page) {
+                setState(() {
+                  currentIndex = page;
+                });
+              },
+              itemBuilder: (context, index) {
+                final item = OnBoardingModels.onBoardingList[index];
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getProportionateScreenHeight(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        item['image'],
+                        height: SizeConfig.getProportionateScreenHeight(350),
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
-                    SizedBox(
-                      width: SizeConfig.screenWidth * 0.8,
-                      child: Text(
-                        item['description'],
-                        textAlign: TextAlign.center,
+                      SizedBox(height: SizeConfig.getProportionateScreenHeight(20)),
+                      Text(
+                        item['title'],
                         style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: SizeConfig.getProportionateScreenHeight(18),
-                          fontWeight: FontWeight.w300,
+                          color: Color(0xFF296E48),
+                          fontSize: SizeConfig.getProportionateScreenWidth(24),
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          Positioned(
-            bottom: SizeConfig.getProportionateScreenHeight(80),
-            left: SizeConfig.getProportionateScreenWidth(20),
-            child: Row(children: _buildIndicator()),
-          ),
-          Positioned(
-            bottom: SizeConfig.getProportionateScreenHeight(70),
-            right: SizeConfig.getProportionateScreenWidth(20),
-            child: GestureDetector(
-              onTap: () {
-                if (currentIndex == OnBoardingModels.onBoardingList.length - 1) {
-                  print('آخرین صفحه! وقتشه بریم صفحه اصلی.');
-                } else {
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.linear,
-                  );
-                }
+                      SizedBox(height: SizeConfig.getProportionateScreenHeight(30)),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.8,
+                        child: Text(
+                          item['description'],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: SizeConfig.getProportionateScreenHeight(18),
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
-              child: Container(
-                alignment: Alignment.center,
-                width: SizeConfig.getProportionateScreenWidth(50),
-                height: SizeConfig.getProportionateScreenHeight(50),
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFF296E48)),
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: SizeConfig.getProportionateScreenWidth(25),
+            ),
+            Positioned(
+              bottom: SizeConfig.getProportionateScreenHeight(40),
+              left: SizeConfig.getProportionateScreenWidth(20),
+              child: Row(children: _buildIndicator()),
+            ),
+            Positioned(
+              bottom: SizeConfig.getProportionateScreenHeight(30),
+              right: SizeConfig.getProportionateScreenWidth(20),
+              child: GestureDetector(
+                onTap: () {
+                  if (currentIndex == OnBoardingModels.onBoardingList.length - 1) {
+                    print('آخرین صفحه! وقتشه بریم صفحه اصلی.');
+                  } else {
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.linear,
+                    );
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: SizeConfig.getProportionateScreenWidth(50),
+                  height: SizeConfig.getProportionateScreenHeight(50),
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFF296E48)),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: SizeConfig.getProportionateScreenWidth(25),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
