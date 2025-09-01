@@ -6,6 +6,7 @@ import 'package:planet_application/screens/home_screen.dart';
 import 'package:planet_application/screens/profile_screen.dart';
 import 'package:planet_application/screens/scan_screen.dart';
 
+import '../models/plant_model.dart';
 import '../utils/size_config.dart';
 
 class RootScreen extends StatefulWidget {
@@ -16,10 +17,20 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
+  List<Plant> addCart = [];
   List<String> appBarTitle = ['خانه', 'علاقه مندی ها', 'سبد خرید', 'پروفایل'];
   int bottonIndex = 0;
+  List<Plant> favorits = [];
   List<IconData> iconsList = [Icons.home, Icons.favorite, Icons.shopping_cart, Icons.person];
-  List<Widget> screens = [HomeScreen(), FavoriteScreen(), CartScreen(), ProfileScreen()];
+
+  List<Widget> screens() {
+    return [
+      HomeScreen(),
+      FavoriteScreen(favoritePlants: favorits),
+      CartScreen(addedTocart: addCart),
+      ProfileScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +78,7 @@ class _RootScreenState extends State<RootScreen> {
         elevation: 3,
         blurEffect: true,
         shadow: Shadow(color: Colors.grey, blurRadius: 10),
-        itemCount: screens.length,
+        itemCount: screens().length,
         tabBuilder: (index, isActive) {
           return Icon(
             iconsList[index],
@@ -83,9 +94,17 @@ class _RootScreenState extends State<RootScreen> {
         leftCornerRadius: 32,
         rightCornerRadius: 32,
         activeIndex: bottonIndex,
-        onTap: (index) => setState(() => bottonIndex = index),
+        onTap: (index) => setState(() {
+          bottonIndex = index;
+
+          final List<Plant> favoritedPlants = Plant.getFavoritedPlants();
+          final List<Plant> addToCartPlants = Plant.addedToCartPlants();
+
+          favorits = favoritedPlants.toSet().toList();
+          addCart = addToCartPlants.toSet().toList();
+        }),
       ),
-      body: IndexedStack(index: bottonIndex, children: screens),
+      body: IndexedStack(index: bottonIndex, children: screens()),
     );
   }
 }

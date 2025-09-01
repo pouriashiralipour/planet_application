@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: SizeConfig.screenHeight * 0.02),
+
             Column(
               children: [
                 Padding(

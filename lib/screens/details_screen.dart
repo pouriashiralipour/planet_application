@@ -17,6 +17,12 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  List<Plant> addCart = [];
+
+  bool toggleIsSelected(bool isSelected) {
+    return !isSelected;
+  }
+
   @override
   Widget build(BuildContext context) {
     final plant = Plant.plantList[widget.id];
@@ -168,9 +174,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    bool isSelected = toggleIsSelected(plant.isSelected);
+                    plant.isSelected = isSelected;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        plant.isSelected ? 'آیتم به سبد خرید اضافه شد' : 'آیتم از سبد خرید حذف شد',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: SizeConfig.getProportionateScreenWidth(16),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      backgroundColor: plant.isSelected ? Color(0xFF296E48) : Colors.redAccent,
+                    ),
+                  );
+                },
                 child: Text(
-                  'افزودن به سبد خرید',
+                  plant.isSelected ? 'اضافه شد' : 'افزودن به سبد خرید',
                   style: TextStyle(
                     fontFamily: 'Lalezar',
                     fontSize: SizeConfig.getProportionateScreenWidth(18),
@@ -188,7 +213,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: GestureDetector(
                 onTap: () {},
                 child: Icon(
-                  Icons.shopping_cart,
+                  plant.isSelected ? Icons.shopping_cart_checkout : Icons.shopping_cart,
                   size: SizeConfig.getProportionateScreenWidth(25),
                   color: Colors.white,
                 ),
